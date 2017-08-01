@@ -20,6 +20,20 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected!');
 
+  // send message to the client
+  socket.emit('newMessage', {
+    from: 'Robb',
+    text: 'Hey, can you meet up at 6?',
+    createdAt: new Date()
+  });
+
+  // print message recieved from the client
+  socket.on('createMessage', (message) => {
+    message.createdAt = new Date();
+    console.log('createMessage', message);
+  });
+
+  // notify when user disconnects from server
   socket.on('disconnect', () => {
     console.log('User was disconnected');
   });
