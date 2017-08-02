@@ -5,10 +5,10 @@ socket.on('connect', function () {
   console.log('Connected to server!');
 
   // send message to the node server
-  socket.emit('createMessage', {
-    from: 'Mike',
-    text: 'Sounds good!'
-  })
+  // socket.emit('createMessage', {
+  //   from: 'Mike',
+  //   text: 'Sounds good!'
+  // })
 });
 
 socket.on('disconnect', function () {
