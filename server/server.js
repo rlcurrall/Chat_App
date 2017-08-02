@@ -5,7 +5,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 /* IMPORTS */
-const {generateMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 
 /* GLOBAL VARIABLES */
 const publicPath = path.join(__dirname, '..', '/public');
@@ -34,6 +34,10 @@ io.on('connection', (socket) => {
     console.log(message.from + ": " + message.text);
     io.emit('newMessage', generateMessage(message.from, message.text));
     callback('This is from the server.');
+  });
+
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
   });
 
   // notify when user disconnects from server
