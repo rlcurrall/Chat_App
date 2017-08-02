@@ -1,3 +1,4 @@
+// Function: takes input and creates message object
 let generateMessage = (from, text) => {
   return {
     from,
@@ -6,4 +7,5 @@ let generateMessage = (from, text) => {
   };
 };
 
+/* EXPORTS */
 module.exports = {generateMessage};

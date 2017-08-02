@@ -4,13 +4,14 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+/* IMPORTS */
 const {generateMessage} = require('./utils/message');
 
 /* GLOBAL VARIABLES */
 const publicPath = path.join(__dirname, '..', '/public');
 const port = process.env.PORT || 3000;
 
-/* EXPRESS SERVER */
+/* SERVER & SOCKET CONFIG */
 let app = express();
 let server = http.createServer(app);
 let io = socketIO(server);
@@ -18,7 +19,7 @@ let io = socketIO(server);
 // configure middleware
 app.use(express.static(publicPath));
 
-// io stuff
+// SOCKET
 io.on('connection', (socket) => {
   console.log('New user connected!');
 
@@ -28,10 +29,11 @@ io.on('connection', (socket) => {
   // Inform other users of new user
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined.'));
 
-  // print message recieved from the client
-  socket.on('createMessage', (message) => {
+  // Emit message recieved from user
+  socket.on('createMessage', (message, callback) => {
     console.log(message.from + ": " + message.text);
     io.emit('newMessage', generateMessage(message.from, message.text));
+    callback('This is from the server.');
   });
 
   // notify when user disconnects from server
@@ -40,7 +42,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// set port for app
+/* SET PORT LISTENER */
 server.listen(port, () => {
   console.log(`Server is up on port ${port}`);
 });
