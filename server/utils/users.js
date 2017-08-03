@@ -30,6 +30,15 @@ class Users {
     return this.users.filter((user) => user.id === id)[0];
   }
 
+  isNameFree (name) {
+    let testUser = this.users.filter((user) => user.name.toLowerCase() === name)[0];
+    if (testUser) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   getUserList (room) {
     let users = this.users.filter((user) => user.room === room);
     let namesArray = users.map((user) => user.name);

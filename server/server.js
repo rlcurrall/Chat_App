@@ -31,6 +31,14 @@ io.on('connection', (socket) => {
     if (!isRealString(params.name) || !isRealString(params.room)) {
       return callback('Name and room name are required.');
     }
+    let checkName = params.name.toLowerCase();
+
+    if (!users.isNameFree(checkName)) {
+      return callback('Name is not available');
+    }
+    
+    users.isNameFree(checkName);
+    params.room = params.room.toLowerCase();
 
     socket.join(params.room);
     users.removeUser(socket.id);
