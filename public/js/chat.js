@@ -59,6 +59,7 @@ socket.on('newMessage', function (message) {
   var html = Mustache.render(template, {
     from: message.from,
     text: message.text,
+    color: message.color,
     createdAt: formattedTime
   });
 
@@ -87,7 +88,8 @@ jQuery('#message-form').on('submit', function (e) {
   e.preventDefault();
   socket.emit('createMessage', {
     from: 'User',
-    text: messageTextBox.val()
+    text: messageTextBox.val(),
+    color: userColor
   }, function () {
     messageTextBox.val('');
   });

@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     if (!users.isNameFree(checkName)) {
       return callback('Name is not available');
     }
-    
+
     users.isNameFree(checkName);
     params.room = params.room.toLowerCase();
 
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
     let user = users.getUser(socket.id);
 
     if (user && isRealString(message.text)) {
-      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text, message.color));
     }
 
     callback();

@@ -1,3 +1,5 @@
+var userColor;
+
 $(document).ready(function () {
   // on click show/hide menu
   $("#showColors").on('click', function (e) {
@@ -19,7 +21,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#000000");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#000000';
+    userColor = '#000000';
   });
 
   // if blue
@@ -27,7 +29,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#1460aa");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#1460aa';
+    userColor = '#1460aa';
   });
 
   // if red
@@ -35,7 +37,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#b50000");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#b50000';
+    userColor = '#b50000';
   });
 
   // if green
@@ -43,7 +45,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#24a159");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#24a159';
+    userColor = '#24a159';
   });
 
   // if purple
@@ -51,7 +53,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#bf6ee0");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#bf6ee0';
+    userColor = '#bf6ee0';
   });
 
   // if yellow
@@ -59,7 +61,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "#aa8f00");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#aa8f00';
+    userColor = '#aa8f00';
   });
 
   // if purple
@@ -67,7 +69,7 @@ $(document).ready(function () {
     $('#showColors').css("color", "9a123b");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#9a123b';
+    userColor = '#9a123b';
   });
 
   // if orange
@@ -75,6 +77,6 @@ $(document).ready(function () {
     $('#showColors').css("color", "#d35400");
     $('#colors').slideUp('slow', function () {});
     // set users text color to value
-    var userColor = '#d35400';
+    userColor = '#d35400';
   });
 });

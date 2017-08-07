@@ -1,10 +1,11 @@
 const moment = require('moment');
 
 // Function: takes input and creates message object
-let generateMessage = (from, text) => {
+let generateMessage = (from, text, color) => {
   return {
     from,
     text,
+    color,
     createdAt: moment().valueOf()
   };
 };
