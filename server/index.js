@@ -20,6 +20,12 @@ let io = socketio(server);
 let users = new Users();
 
 // configure middleware
+app.get('/', (req, res) =>
+    res.sendFile(path.join(__dirname, 'views/index.html')),
+);
+app.get('/chat', (req, res) =>
+    res.sendFile(path.join(__dirname, 'views/chat.html')),
+);
 app.use(express.static(publicPath));
 
 // SOCKET
