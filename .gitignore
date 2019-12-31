@@ -1,1 +1,7 @@
+# Dependendies
 node_modules/
+
+# IDE Files
+.idea
+.vscode
+*.code-workspace

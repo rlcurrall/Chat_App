@@ -2,12 +2,11 @@
  * @class Users
  */
 class Users {
-
     /**
      * Creates an instance of Users.
      * @memberof Users
      */
-    constructor () {
+    constructor() {
         this.users = [];
     }
 
@@ -20,8 +19,8 @@ class Users {
      * @returns User
      * @memberof Users
      */
-    addUser (id, name, room) {
-        let user = {id, name, room};
+    addUser(id, name, room) {
+        let user = { id, name, room };
         this.users.push(user);
         return user;
     }
@@ -33,11 +32,11 @@ class Users {
      * @returns User
      * @memberof Users
      */
-    removeUser (id) {
+    removeUser(id) {
         let user = this.getUser(id);
 
         if (user) {
-            this.users = this.users.filter((user) => user.id !== id);
+            this.users = this.users.filter(user => user.id !== id);
         }
         return user;
     }
@@ -49,8 +48,8 @@ class Users {
      * @returns User[]
      * @memberof Users
      */
-    getUser (id) {
-        return this.users.filter((user) => user.id === id)[0];
+    getUser(id) {
+        return this.users.filter(user => user.id === id)[0];
     }
 
     /**
@@ -60,8 +59,10 @@ class Users {
      * @returns boolean
      * @memberof Users
      */
-    isNameFree (name) {
-        let testUser = this.users.filter((user) => user.name.toLowerCase() === name)[0];
+    isNameFree(name) {
+        let testUser = this.users.filter(
+            user => user.name.toLowerCase() === name,
+        )[0];
         if (testUser) {
             return false;
         } else {
@@ -76,11 +77,11 @@ class Users {
      * @returns string[]
      * @memberof Users
      */
-    getUserList (room) {
-        let users = this.users.filter((user) => user.room === room);
-        let namesArray = users.map((user) => user.name);
+    getUserList(room) {
+        let users = this.users.filter(user => user.room === room);
+        let namesArray = users.map(user => user.name);
         return namesArray;
     }
 }
 
-module.exports = {Users};
+module.exports = { Users };

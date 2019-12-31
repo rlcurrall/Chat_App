@@ -13,7 +13,7 @@ function generateMessage(from, text, color) {
         from,
         text,
         color,
-        createdAt: moment().valueOf()
+        createdAt: moment().valueOf(),
     };
 }
 
@@ -29,9 +29,9 @@ function generateLocationMessage(from, lat, long) {
     return {
         from,
         url: `https://www.google.com/maps?q=${lat},${long}`,
-        createdAt: moment().valueOf()
+        createdAt: moment().valueOf(),
     };
 }
 
 /* EXPORTS */
-module.exports = {generateMessage, generateLocationMessage};
+module.exports = { generateMessage, generateLocationMessage };

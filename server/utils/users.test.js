@@ -1,25 +1,29 @@
 const expect = require('expect');
 const { describe, it, beforeEach } = require('mocha');
 
-const {Users} = require('./users');
+const { Users } = require('./users');
 
 describe('Users', () => {
     let users;
     beforeEach(() => {
         users = new Users();
-        users.users = [{
-            id: '1',
-            name: 'mike',
-            room: 'node'
-        },{
-            id: '2',
-            name: 'jan',
-            room: 'react'
-        },{
-            id: '3',
-            name: 'dan',
-            room: 'node'
-        }];
+        users.users = [
+            {
+                id: '1',
+                name: 'mike',
+                room: 'node',
+            },
+            {
+                id: '2',
+                name: 'jan',
+                room: 'react',
+            },
+            {
+                id: '3',
+                name: 'dan',
+                room: 'node',
+            },
+        ];
     });
 
     // addUser
@@ -28,7 +32,7 @@ describe('Users', () => {
         let user = {
             id: '123',
             name: 'Robb',
-            room: 'Test'
+            room: 'Test',
         };
         users.addUser(user.id, user.name, user.room);
         expect(users.users).toEqual([user]);

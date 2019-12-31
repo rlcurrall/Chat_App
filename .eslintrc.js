@@ -6,7 +6,6 @@ module.exports = {
     'extends': [
         'eslint:recommended',
         'plugin:vue/essential',
-        'plugin:@typescript-eslint/eslint-recommended'
     ],
     'globals': {
         'Atomics': 'readonly',
@@ -14,26 +13,15 @@ module.exports = {
     },
     'parserOptions': {
         'ecmaVersion': 2018,
-        'parser': '@typescript-eslint/parser',
         'sourceType': 'module'
     },
     'plugins': [
         'vue',
-        '@typescript-eslint'
+        'html',
+        'prettier',
     ],
     'rules': {
-        'indent': ['error', 4],
+        'prettier/prettier': 'error',
         'linebreak-style': ['error', 'unix'],
-        'quotes': ['error', 'single'],
-        'semi': ['error', 'always'],
-        'block-spacing': ['error', 'always'],
-        'comma-dangle': ['error', {
-            'arrays': 'always',
-            'objects': 'always',
-            'imports': 'always',
-            'exports': 'always',
-            'functions': 'never'
-        }],
-        'max-len': ['error', { 'code': 120, 'ignoreComments': true }]
     }
 };
