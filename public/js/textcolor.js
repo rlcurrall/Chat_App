@@ -1,4 +1,5 @@
-/* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
+let userColor;
 
 $(document).ready(function() {
     // on click show/hide menu

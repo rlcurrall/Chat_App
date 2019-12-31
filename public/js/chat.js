@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* global userColor */
 
 // Create socket for connection with server
 let socket = io();
@@ -59,7 +59,7 @@ socket.on('updateUserList', function(users) {
     console.log('Users list', users);
 });
 
-// Display message recieved from server
+// Display message received from server
 socket.on('newMessage', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#message-template').html();
@@ -74,7 +74,7 @@ socket.on('newMessage', function(message) {
     scrollToBottom();
 });
 
-// Display location link recievex from server
+// Display location link received from server
 socket.on('newLocationMessage', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#location-message-template').html();
