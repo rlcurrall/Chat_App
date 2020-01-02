@@ -7,7 +7,7 @@ const { SocketHandler } = require('./app/socket.handler');
 /* SERVER & SOCKET CONFIG */
 const requestHandler = RequestHandler.make();
 const server = http.createServer(requestHandler);
-SocketHandler.register(server);
+new SocketHandler(server);
 
 /* SET PORT LISTENER */
 server.listen(process.env.PORT || 3000, () => {
