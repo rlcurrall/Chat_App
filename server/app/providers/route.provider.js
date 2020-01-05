@@ -16,14 +16,26 @@ class RouteProvider {
         this.app.use(express.static(path.join(process.env.ROOT_DIR, 'public')));
 
         this.app.get('/', (req, res) => {
+            if (req.session.username && req.session.room) {
+                res.redirect('/chat');
+                return;
+            }
+
             res.render('home');
         });
 
-        this.app.get('/chat', (_, res) => {
-            res.render('chat');
+        this.app.get('/chat', (req, res) => {
+            if (req.session.username && req.session.room) {
+                res.render('chat', { username: req.session.username, room: req.session.room});
+                return;
+            }
+            res.redirect('/');
         });
 
         this.app.post('/chat', (req, res) => {
+            req.session.username = req.body.username;
+            req.session.room = req.body.room;
+
             res.render('chat', req.body);
         });
 
