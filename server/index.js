@@ -1,15 +1,7 @@
 require('./bootstrap');
 
-const http = require('http');
-const { RequestHandler } = require('./app/request.handler');
-const { SocketHandler } = require('./app/socket.handler');
+const { Server } = require('./app/server');
 
-/* SERVER & SOCKET CONFIG */
-const requestHandler = RequestHandler.make();
-const server = http.createServer(requestHandler);
-new SocketHandler(server);
+const server = new Server();
 
-/* SET PORT LISTENER */
-server.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is up on port ${process.env.PORT || 3000}`);
-});
+server.boot();

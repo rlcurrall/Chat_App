@@ -3,6 +3,18 @@
 // Create socket for connection with server
 let socket = io();
 
+function getMeta(metaName) {
+    const metas = document.getElementsByTagName('meta');
+
+    for (let i = 0; i < metas.length; i++) {
+        if (metas[i].getAttribute('name') === metaName) {
+            return metas[i].getAttribute('content');
+        }
+    }
+
+    return null;
+}
+
 // Auto-scroll page
 function scrollToBottom() {
     // Selectors
@@ -26,11 +38,10 @@ function scrollToBottom() {
 
 // Indicate when user connects
 socket.on('connect', function() {
-    const params = Qs.parse(window.location.search, {
-        ignoreQueryPrefix: true,
-    });
+    const name = getMeta('username');
+    const room = getMeta('room');
 
-    socket.emit('join', params, function(err) {
+    socket.emit('join', { name, room }, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
