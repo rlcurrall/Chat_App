@@ -6,7 +6,18 @@ const {
     LocationMessageListener,
 } = require('../listeners/locationMessage.listener');
 
+/**
+ * Provide all listeners for events on the socket connection.
+ *
+ * @class SocketProvider
+ * @property {SocketIO.Server} io
+ */
 class SocketProvider {
+    /**
+     * Creates an instance of SocketProvider.
+     * @param {SocketIO.Server} io
+     * @memberof SocketProvider
+     */
     constructor(io) {
         this.io = io;
         this.userRepo = new Users();
@@ -14,10 +25,10 @@ class SocketProvider {
 
     get listeners() {
         return {
-            message: MessageListener,
-            join: JoinRoomListener,
             disconnect: DisconnectListener,
-            'location-message': LocationMessageListener,
+            'room.join': JoinRoomListener,
+            'message.post': MessageListener,
+            'message.post.location': LocationMessageListener,
         };
     }
 

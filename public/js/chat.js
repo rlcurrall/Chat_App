@@ -41,7 +41,7 @@ socket.on('connect', function() {
     const name = getMeta('username');
     const room = getMeta('room');
 
-    socket.emit('join', { name, room }, function(err) {
+    socket.emit('room.join', { name, room }, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
@@ -56,7 +56,7 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server.');
 });
 
-socket.on('updateUserList', function(users) {
+socket.on('user-list.update', function(users) {
     let ol = $('<ol></ol');
 
     users.forEach(function(user) {
@@ -66,12 +66,12 @@ socket.on('updateUserList', function(users) {
     $('#users').html(ol);
 });
 
-socket.on('updateUserList', function(users) {
+socket.on('user-list.update', function(users) {
     console.log('Users list', users);
 });
 
 // Display message received from server
-socket.on('newMessage', function(message) {
+socket.on('message.new', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#message-template').html();
     let html = Mustache.render(template, {
@@ -86,7 +86,7 @@ socket.on('newMessage', function(message) {
 });
 
 // Display location link received from server
-socket.on('newLocationMessage', function(message) {
+socket.on('message.new.location', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#location-message-template').html();
     let html = Mustache.render(template, {
@@ -105,7 +105,7 @@ let messageTextBox = $('[name=message]');
 $('#message-form').on('submit', function(e) {
     e.preventDefault();
     socket.emit(
-        'message',
+        'message.post',
         {
             from: 'User',
             text: messageTextBox.val(),
@@ -132,7 +132,7 @@ locationButton.on('click', function() {
         function(position) {
             locationButton.removeAttr('disabled').text('Send Location');
 
-            socket.emit('location-message', {
+            socket.emit('message.post.location', {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             });
@@ -140,7 +140,7 @@ locationButton.on('click', function() {
         function() {
             locationButton.removeAttr('disabled').text('Send Location');
 
-            alert('Unable to fetch location.');
+            alert('Unable to fetch location at this time.');
         },
     );
 });

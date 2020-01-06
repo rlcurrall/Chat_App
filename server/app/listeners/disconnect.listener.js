@@ -1,6 +1,18 @@
 const { generateMessage } = require('../../utils/message');
 
+// Import for documentation and type hint purposes
+// eslint-disable-next-line no-unused-vars
+const socketIO = require('socket.io');
+
 class DisconnectListener {
+    /**
+     * Creates an instance of DisconnectListener.
+     *
+     * @param {socketIO.Server} io
+     * @param {socketIO.Socket} socket
+     * @param {Users} userRepo
+     * @memberof DisconnectListener
+     */
     constructor(io, socket, userRepo) {
         this.io = io;
         this.socket = socket;
@@ -13,11 +25,11 @@ class DisconnectListener {
         if (user) {
             this.io
                 .to(user.room)
-                .emit('updateUserList', this.userRepo.getUserList(user.room));
+                .emit('user-list.update', this.userRepo.getUserList(user.room));
             this.io
                 .to(user.room)
                 .emit(
-                    'newMessage',
+                    'message.new',
                     generateMessage('Admin', `${user.name} has left`),
                 );
         }

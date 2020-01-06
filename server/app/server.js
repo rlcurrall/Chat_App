@@ -1,7 +1,7 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
-const socketio = require('socket.io');
+const socketIO = require('socket.io');
 const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const { RouteProvider } = require('./providers/route.provider');
@@ -15,7 +15,7 @@ class Server {
     constructor() {
         let app = express();
         let server = http.createServer(app);
-        let io = socketio(server);
+        let io = socketIO(server);
 
         app.io = io;
         app.set('views', path.join(process.env.SERVER_DIR, 'views'));
