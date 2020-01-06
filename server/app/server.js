@@ -1,5 +1,6 @@
 const http = require('http');
 const path = require('path');
+const helmet = require('helmet');
 const express = require('express');
 const socketIO = require('socket.io');
 const session = require('cookie-session');
@@ -18,6 +19,9 @@ class Server {
         let io = socketIO(server);
 
         app.io = io;
+        app.set('trust proxy', 1);
+        app.disable('x-powered-by');
+
         app.set('views', path.join(process.env.SERVER_DIR, 'views'));
         app.set('view engine', 'ejs');
 
@@ -37,6 +41,8 @@ class Server {
     }
 
     [registerGlobalMiddleware]() {
+        this.app.use(helmet());
+
         this.app.use(
             session({
                 name: 'chat-session',
