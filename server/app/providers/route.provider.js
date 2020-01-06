@@ -1,6 +1,12 @@
-const express = require('express');
 const path = require('path');
+const express = require('express');
 
+/**
+ *A class for registering all routes on the server.
+ *
+ * @class RouteProvider
+ * @property express.Express app
+ */
 class RouteProvider {
     constructor(app) {
         this.app = app;
@@ -26,7 +32,10 @@ class RouteProvider {
 
         this.app.get('/chat', (req, res) => {
             if (req.session.username && req.session.room) {
-                res.render('chat', { username: req.session.username, room: req.session.room});
+                res.render('chat', {
+                    username: req.session.username,
+                    room: req.session.room,
+                });
                 return;
             }
             res.redirect('/');
@@ -37,6 +46,11 @@ class RouteProvider {
             req.session.room = req.body.room;
 
             res.render('chat', req.body);
+        });
+
+        this.app.get('/logout', (req, res) => {
+            req.session = null;
+            res.redirect('/');
         });
 
         this.app.get('*', (_, res) => res.redirect('/'));

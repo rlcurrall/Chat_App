@@ -33,14 +33,16 @@ class Server {
 
         this.server.listen(process.env.PORT || 3000, () => {
             console.log(`Server is up on port ${process.env.PORT || 3000}`);
-        })
+        });
     }
 
     [registerGlobalMiddleware]() {
-        this.app.use(session({
-            name: 'chat-session',
-            signed: false,
-        }));
+        this.app.use(
+            session({
+                name: 'chat-session',
+                signed: false,
+            }),
+        );
 
         this.app.use(bodyParser.json());
 
@@ -61,5 +63,5 @@ class Server {
 }
 
 module.exports = {
-    Server
+    Server,
 };

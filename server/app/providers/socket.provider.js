@@ -2,7 +2,9 @@ const { Users } = require('../entities/user.entity');
 const { MessageListener } = require('../listeners/message.listener');
 const { JoinRoomListener } = require('../listeners/joinRoom.listener');
 const { DisconnectListener } = require('../listeners/disconnect.listener');
-const { LocationMessageListener } = require('../listeners/locationMessage.listener');
+const {
+    LocationMessageListener,
+} = require('../listeners/locationMessage.listener');
 
 class SocketProvider {
     constructor(io) {
@@ -12,9 +14,9 @@ class SocketProvider {
 
     get listeners() {
         return {
-            'message': MessageListener,
-            'join': JoinRoomListener,
-            'disconnect': DisconnectListener,
+            message: MessageListener,
+            join: JoinRoomListener,
+            disconnect: DisconnectListener,
             'location-message': LocationMessageListener,
         };
     }
@@ -22,7 +24,7 @@ class SocketProvider {
     register() {
         this.io.on('connection', socket => {
             for (const key in this.listeners) {
-                if (this.listeners.hasOwnProperty(key)) {
+                if (key in this.listeners) {
                     const listener = this.listeners[key];
                     const listenerInstance = new listener(
                         this.io,
@@ -30,7 +32,10 @@ class SocketProvider {
                         this.userRepo,
                     );
 
-                    socket.on(key, listenerInstance.handle.bind(listenerInstance));
+                    socket.on(
+                        key,
+                        listenerInstance.handle.bind(listenerInstance),
+                    );
                 }
             }
         });
