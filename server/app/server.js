@@ -12,13 +12,26 @@ const registerRoutes = Symbol('registerRoutes');
 const registerSocket = Symbol('registerSocket');
 const registerGlobalMiddleware = Symbol('registerGlobalMiddleware');
 
+/**
+ * An instance of a server.
+ *
+ * @class Server
+ * @property {express.application} app
+ * @property {http.Server} server
+ * @property {socketIO.Server} io
+ */
 class Server {
+    /**
+     * Creates an instance of Server.
+     * @memberof Server
+     */
     constructor() {
         let app = express();
         let server = http.createServer(app);
         let io = socketIO(server);
 
         app.io = io;
+
         app.set('trust proxy', 1);
         app.disable('x-powered-by');
 
@@ -30,6 +43,12 @@ class Server {
         this.io = io;
     }
 
+    /**
+     * Start the server listening on the port defined by the environment
+     * variable 'PORT'.
+     *
+     * @memberof Server
+     */
     boot() {
         this[registerGlobalMiddleware]();
         this[registerRoutes]();

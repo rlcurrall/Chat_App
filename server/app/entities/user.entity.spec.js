@@ -1,7 +1,7 @@
 const expect = require('expect');
 const { describe, it, beforeEach } = require('mocha');
 
-const { Users } = require('./users');
+const { Users } = require('./user.entity');
 
 describe('Users', () => {
     let users;

@@ -1,7 +1,7 @@
 const expect = require('expect');
 const { describe, it } = require('mocha');
 
-let { generateMessage, generateLocationMessage } = require('./message');
+let { generateMessage, generateLocationMessage } = require('./message.service');
 
 describe('generateMessage', () => {
     it('should generate correct message object', () => {

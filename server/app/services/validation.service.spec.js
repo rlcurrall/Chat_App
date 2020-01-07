@@ -1,7 +1,7 @@
 const expect = require('expect');
 const { describe, it } = require('mocha');
 
-const { isRealString } = require('./validation');
+const { isRealString } = require('./validation.service');
 
 describe('isRealString', () => {
     it('should reject non-string values', () => {
