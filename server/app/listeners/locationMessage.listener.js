@@ -1,4 +1,4 @@
-const { generateLocationMessage } = require('../../utils/message');
+const { generateLocationMessage } = require('../services/message.service');
 
 // Import for documentation and type hint purposes
 // eslint-disable-next-line no-unused-vars

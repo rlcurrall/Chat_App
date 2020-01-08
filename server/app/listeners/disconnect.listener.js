@@ -1,4 +1,4 @@
-const { generateMessage } = require('../../utils/message');
+const { generateMessage } = require('../services/message.service');
 
 // Import for documentation and type hint purposes
 // eslint-disable-next-line no-unused-vars
