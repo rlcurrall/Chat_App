@@ -1,5 +1,7 @@
 const path = require('path');
 const express = require('express');
+const AuthController = require('../controllers/auth.controller');
+const ChatController = require('../controllers/chat.controller');
 
 /**
  *A class for registering all routes on the server.
@@ -32,39 +34,19 @@ class RouteProvider {
     }
 
     register() {
-        this.app.get('/', (req, res) => {
-            if (req.session.username && req.session.room) {
-                res.redirect('/chat');
-                return;
+        this.app.get('/', AuthController.showLogin);
+
+        this.app.get('/chat', ChatController.index);
+
+        this.app.post('/chat', ChatController.newChat);
+
+        this.app.get('/logout', AuthController.logout);
+
+        this.app.all('*', (_, res) => {
+            if (!res.headersSent) {
+                res.redirect('/');
             }
-
-            res.render('home');
         });
-
-        this.app.get('/chat', (req, res) => {
-            if (req.session.username && req.session.room) {
-                res.render('chat', {
-                    username: req.session.username,
-                    room: req.session.room,
-                });
-                return;
-            }
-            res.redirect('/');
-        });
-
-        this.app.post('/chat', (req, res) => {
-            req.session.username = req.body.username;
-            req.session.room = req.body.room;
-
-            res.render('chat', req.body);
-        });
-
-        this.app.get('/logout', (req, res) => {
-            req.session = null;
-            res.redirect('/');
-        });
-
-        this.app.get('*', (_, res) => res.redirect('/'));
     }
 }
 
