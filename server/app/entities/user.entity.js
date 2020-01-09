@@ -1,9 +1,27 @@
 /**
  * @class Users
- * 
+ *
  * TODO This should be changed to use Redis to store the users and room info.
  *      By using Redis to store the information will help to improve the
  *      performance and scalability of the application.
+ *
+ *      The associated redis commands should be:
+ *          ** Add New User **
+ *          > MULTI
+ *          > HMSET user:{id} username {username} room {room name}
+ *          > SADD username:{username} {id}
+ *          > SADD room:{room name} {id}
+ *          > EXEC
+ *
+ *          ** Remove User **
+ *          > MULTI
+ *          > DEL user:{id}
+ *          > SREM username:{username} {id}
+ *          > SREM room:{room name} {id}
+ *          > EXEC
+ *
+ *          ** Get ID for user by username and room **
+ *          > SINTER username:{username} room:{room name}
  */
 class Users {
     /**
