@@ -23,5 +23,8 @@ module.exports = {
     'rules': {
         'prettier/prettier': 'error',
         'linebreak-style': ['error', 'unix'],
+    },
+    'settings': {
+        'html/html-extensions': ['.html', '.ejs']
     }
 };

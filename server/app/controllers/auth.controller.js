@@ -12,7 +12,7 @@ function showLogin(req, res, next) {
         return;
     }
 
-    res.render('home');
+    res.render('login');
     next();
 }
 
