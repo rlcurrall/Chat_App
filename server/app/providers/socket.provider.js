@@ -1,4 +1,4 @@
-const { Users } = require('../entities/user.entity');
+const Users = require('../entities/users');
 const { MessageListener } = require('../listeners/message.listener');
 const { JoinRoomListener } = require('../listeners/joinRoom.listener');
 const { DisconnectListener } = require('../listeners/disconnect.listener');

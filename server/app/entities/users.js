@@ -1,5 +1,3 @@
-const Entity = require('./entity');
-
 /**
  * @class Users
  *
@@ -26,17 +24,12 @@ const Entity = require('./entity');
  *          ** Get ID for user by username and room **
  *          > SINTER username:{username} room:{room name}
  */
-class Users extends Entity {
-    get columns() {
-        return ['username', 'room'];
-    }
-
+class Users {
     /**
      * Creates an instance of Users.
      * @memberof Users
      */
     constructor() {
-        super({ username: 'temp', room: 'temp' });
         this.users = [];
     }
 
@@ -114,4 +107,4 @@ class Users extends Entity {
     }
 }
 
-module.exports = { Users };
+module.exports = Users;
