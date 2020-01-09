@@ -1,9 +1,12 @@
+const Entity = require('./entity');
+
 /**
  * @class Users
  *
  * TODO This should be changed to use Redis to store the users and room info.
  *      By using Redis to store the information will help to improve the
  *      performance and scalability of the application.
+ *      Ref: https://stackoverflow.com/a/11471258
  *
  *      The associated redis commands should be:
  *          ** Add New User **
@@ -23,12 +26,17 @@
  *          ** Get ID for user by username and room **
  *          > SINTER username:{username} room:{room name}
  */
-class Users {
+class Users extends Entity {
+    get columns() {
+        return ['username', 'room'];
+    }
+
     /**
      * Creates an instance of Users.
      * @memberof Users
      */
     constructor() {
+        super({ username: 'temp', room: 'temp' });
         this.users = [];
     }
 
