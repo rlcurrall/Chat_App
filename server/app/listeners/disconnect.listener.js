@@ -1,15 +1,17 @@
 const { generateMessage } = require('../services/message.service');
 
-// Import for documentation and type hint purposes
-// eslint-disable-next-line no-unused-vars
-const socketIO = require('socket.io');
-
+/**
+ * @class DisconnectListener
+ * @property {SocketIO.Server} io
+ * @property {SocketIO.Socket} socket
+ * @property {Users} userRepo
+ */
 class DisconnectListener {
     /**
      * Creates an instance of DisconnectListener.
      *
-     * @param {socketIO.Server} io
-     * @param {socketIO.Socket} socket
+     * @param {SocketIO.Server} io
+     * @param {SocketIO.Socket} socket
      * @param {Users} userRepo
      * @memberof DisconnectListener
      */

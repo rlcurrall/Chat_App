@@ -1,5 +1,9 @@
 /**
  * @class Users
+ * 
+ * TODO This should be changed to use Redis to store the users and room info.
+ *      By using Redis to store the information will help to improve the
+ *      performance and scalability of the application.
  */
 class Users {
     /**

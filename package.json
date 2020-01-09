@@ -9,7 +9,6 @@
     "url": "https://www.currall.net"
   },
   "main": "server/index.js",
-  "type": "module",
   "engines": {
     "node": "12.x",
     "npm": "6.x"
