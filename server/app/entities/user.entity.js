@@ -7,23 +7,27 @@ class User {
     }
 
     async save() {
-        const redis = new Redis(process.env.REDIS_URL);
-        const key = this.constructor.name.toLowerCase();
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
 
-        await redis.set(`${key}:${this.room}:${this.username}`, '', 'EX', 7200);
+        await redis.set(`user:${this.room}:${this.username}`, '', 'EX', 7200);
     }
 
     async delete() {
-        const redis = new Redis(process.env.REDIS_URL);
-        const key = this.constructor.name.toLowerCase();
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
 
-        await redis.del(`${key}:${this.room}:${this.username}`);
+        await redis.del(`user:${this.room}:${this.username}`);
 
         return this;
     }
 
     static async delete(username, room) {
-        const redis = new Redis(process.env.REDIS_URL);
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
         room = room.toLowerCase();
         username = username.toLowerCase();
 
@@ -31,7 +35,9 @@ class User {
     }
 
     static async find(username, room) {
-        const redis = new Redis(process.env.REDIS_URL);
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
         room = room.toLowerCase();
         username = username.toLowerCase();
 
@@ -45,7 +51,9 @@ class User {
     }
 
     static async exists(username, room) {
-        const redis = new Redis(process.env.REDIS_URL);
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
         room = room.toLowerCase();
         username = username.toLowerCase();
 
@@ -55,7 +63,9 @@ class User {
     }
 
     static async getByRoom(room) {
-        const redis = new Redis(process.env.REDIS_URL);
+        const redis = new Redis(
+            `${process.env.REDIS_URL}/${process.env.USER_DB}`,
+        );
         const pattern = `user:${room.toLowerCase()}:*`;
         let users = [];
 

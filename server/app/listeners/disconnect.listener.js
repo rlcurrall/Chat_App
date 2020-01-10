@@ -31,19 +31,18 @@ class DisconnectListener {
         }
 
         this.socket.leave(room);
-        user.delete();
+        this.socket.disconnect();
+        await user.delete();
 
         let users = await User.getByRoom(room);
 
-        if (user) {
-            this.io.to(user.room).emit('user-list.update', users);
-            this.io
-                .to(user.room)
-                .emit(
-                    'message.new',
-                    generateMessage('Admin', `${user.username} has left`),
-                );
-        }
+        this.io.to(user.room).emit('user-list.update', users);
+        this.io
+            .to(user.room)
+            .emit(
+                'message.new',
+                generateMessage('Admin', `${user.username} has left`),
+            );
     }
 }
 

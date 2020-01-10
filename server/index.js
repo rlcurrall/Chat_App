@@ -1,23 +1,23 @@
 /*
- |------------------------------------------------------------------------------
- | Bootstrap the Application
- |------------------------------------------------------------------------------
- |
- | Set all necessary environment variables.
- |
- */
+|-------------------------------------------------------------------------------
+| Bootstrap the Application
+|-------------------------------------------------------------------------------
+|
+| Execute any pre-boot processes that need to happen before the server can start
+| receiving requests.`
+|
+*/
 require('./bootstrap');
 
-
 /*
- |------------------------------------------------------------------------------
- | Create the Server
- |------------------------------------------------------------------------------
- |
- | Create an instance of the server. Boot the server to start processing
- | requests.
- |
- */
+|-------------------------------------------------------------------------------
+| Create The Server
+|-------------------------------------------------------------------------------
+|
+| Once all pre-boot processes have completed, we will create a new Server
+| instance which will register all components of the application.
+|
+*/
 const { Server } = require('./app/server');
 
 const server = new Server();
