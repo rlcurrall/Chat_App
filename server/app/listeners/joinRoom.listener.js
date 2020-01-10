@@ -1,3 +1,5 @@
+const User = require('../entities/user.entity');
+const { getSession } = require('../helpers/session.helpers');
 const { isRealString } = require('../services/validation.service');
 const { generateMessage } = require('../services/message.service');
 
@@ -15,40 +17,40 @@ class JoinRoomListener {
      * @param {Users} userRepo
      * @memberof JoinRoomListener
      */
-    constructor(io, socket, userRepo) {
+    constructor(io, socket) {
         this.io = io;
         this.socket = socket;
-        this.userRepo = userRepo;
     }
 
-    handle({ name, room }, callback) {
-        if (!isRealString(name) || !isRealString(room)) {
+    async handle(_, callback) {
+        const { username, room } = getSession(this.socket);
+
+        if (!isRealString(username) || !isRealString(room)) {
             return callback('Name and room name are required.');
         }
-        let checkName = name.toLowerCase();
 
-        if (!this.userRepo.isNameFree(checkName)) {
+        let exists = await User.exists(username, room);
+        if (exists) {
             return callback('Name is not available');
         }
 
-        room = room.toLowerCase();
+        let user = new User(username, room);
+        await user.save();
 
-        this.socket.join(room);
-        this.userRepo.removeUser(this.socket.id);
-        this.userRepo.addUser(this.socket.id, name, room);
-        this.io
-            .to(room)
-            .emit('user-list.update', this.userRepo.getUserList(room));
+        let users = await User.getByRoom(user.room);
+        this.socket.join(user.room);
+
+        this.io.to(user.room).emit('user-list.update', users);
 
         this.socket.emit(
             'message.new',
             generateMessage('Admin', 'Welcome to the chat app!'),
         );
         this.socket.broadcast
-            .to(room)
+            .to(user.room)
             .emit(
                 'message.new',
-                generateMessage('Admin', `${name} has joined`),
+                generateMessage('Admin', `${user.username} has joined`),
             );
         callback();
     }

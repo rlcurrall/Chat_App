@@ -3,10 +3,10 @@ const path = require('path');
 const helmet = require('helmet');
 const express = require('express');
 const socketIO = require('socket.io');
-const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const { RouteProvider } = require('./providers/route.provider');
 const { SocketProvider } = require('./providers/socket.provider');
+const CookieSessionMiddleware = require('./middleware/session.middleware');
 
 const registerRoutes = Symbol('registerRoutes');
 const registerSocket = Symbol('registerSocket');
@@ -62,12 +62,7 @@ class Server {
     [registerGlobalMiddleware]() {
         this.app.use(helmet());
 
-        this.app.use(
-            session({
-                name: 'chat-session',
-                signed: false,
-            }),
-        );
+        this.app.use(CookieSessionMiddleware);
 
         this.app.use(bodyParser.json());
 

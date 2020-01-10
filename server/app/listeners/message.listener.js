@@ -1,3 +1,5 @@
+const User = require('../entities/user.entity');
+const { getSession } = require('../helpers/session.helpers');
 const { isRealString } = require('../services/validation.service');
 const { generateMessage } = require('../services/message.service');
 
@@ -15,21 +17,22 @@ class MessageListener {
      * @param {Users} userRepo
      * @memberof MessageListener
      */
-    constructor(io, socket, userRepo) {
+    constructor(io, socket) {
         this.io = io;
         this.socket = socket;
-        this.userRepo = userRepo;
     }
 
-    handle(message, callback) {
-        let user = this.userRepo.getUser(this.socket.id);
+    async handle({ text, color }, callback) {
+        const { username, room } = getSession(this.socket);
 
-        if (user && isRealString(message.text)) {
+        let user = await User.find(username, room);
+
+        if (user && isRealString(text)) {
             this.io
                 .to(user.room)
                 .emit(
                     'message.new',
-                    generateMessage(user.name, message.text, message.color),
+                    generateMessage(user.username, text, color),
                 );
         }
 

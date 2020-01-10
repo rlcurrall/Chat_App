@@ -57,6 +57,7 @@ socket.on('disconnect', function() {
 });
 
 socket.on('user-list.update', function(users) {
+    console.log('users:', users);
     let ol = $('<ol></ol');
 
     users.forEach(function(user) {
@@ -103,10 +104,15 @@ let messageTextBox = $('[name=message]');
 
 // When form is submitted, don't reload page, send emit message
 $('#message-form').on('submit', function(e) {
+    const username = getMeta('username');
+    const room = getMeta('room');
+
     e.preventDefault();
     socket.emit(
         'message.post',
         {
+            username,
+            room,
             from: 'User',
             text: messageTextBox.val(),
             color: userColor,
@@ -130,9 +136,13 @@ locationButton.on('click', function() {
 
     navigator.geolocation.getCurrentPosition(
         function(position) {
+            const username = getMeta('username');
+            const room = getMeta('room');
             locationButton.removeAttr('disabled').text('Send Location');
 
             socket.emit('message.post.location', {
+                username,
+                room,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
             });
