@@ -1,3 +1,5 @@
+const User = require('../entities/user.entity');
+const { getSession } = require('../helpers/session.helpers');
 const { generateLocationMessage } = require('../services/message.service');
 
 /**
@@ -14,14 +16,14 @@ class LocationMessageListener {
      * @param {Users} userRepo
      * @memberof LocationMessageListener
      */
-    constructor(io, socket, userRepo) {
+    constructor(io, socket) {
         this.io = io;
         this.socket = socket;
-        this.userRepo = userRepo;
     }
 
-    handle(coords) {
-        let user = this.userRepo.getUser(this.socket.id);
+    async handle(coords) {
+        const { username, room } = getSession(this.socket);
+        const user = await User.find(username, room);
 
         if (user) {
             this.io
@@ -29,7 +31,7 @@ class LocationMessageListener {
                 .emit(
                     'message.new.location',
                     generateLocationMessage(
-                        user.name,
+                        user.username,
                         coords.latitude,
                         coords.longitude,
                     ),
