@@ -35,7 +35,7 @@ class Server {
         app.set('trust proxy', 1);
         app.disable('x-powered-by');
 
-        app.set('views', path.join(process.env.SERVER_DIR, 'views'));
+        app.set('views', path.join(process.env.ROOT_DIR, 'views'));
         app.set('view engine', 'ejs');
 
         this.app = app;

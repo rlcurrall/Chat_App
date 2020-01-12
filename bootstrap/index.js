@@ -12,8 +12,7 @@ const Redis = require('ioredis');
 */
 process.env.REDIS_URL = process.env.REDIS_URL || 'redis://:@localhost:6379';
 process.env.USER_DB = process.env.USER_DB || 1;
-process.env.SERVER_DIR = path.join(__dirname, '..');
-process.env.ROOT_DIR = path.join(__dirname, '..', '..');
+process.env.ROOT_DIR = path.join(__dirname, '..');
 
 /*
 |-------------------------------------------------------------------------------
