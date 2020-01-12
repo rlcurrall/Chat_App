@@ -1,10 +1,8 @@
 const Users = require('../entities/users');
-const { MessageListener } = require('../listeners/message.listener');
-const { JoinRoomListener } = require('../listeners/joinRoom.listener');
-const { DisconnectListener } = require('../listeners/disconnect.listener');
-const {
-    LocationMessageListener,
-} = require('../listeners/locationMessage.listener');
+const MessageListener = require('../listeners/message.listener');
+const JoinRoomListener = require('../listeners/joinRoom.listener');
+const DisconnectListener = require('../listeners/disconnect.listener');
+const LocationMessageListener = require('../listeners/locationMessage.listener');
 
 /**
  * Provide all listeners for events on the socket connection.
@@ -53,6 +51,4 @@ class SocketProvider {
     }
 }
 
-module.exports = {
-    SocketProvider,
-};
+module.exports = SocketProvider;

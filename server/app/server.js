@@ -4,8 +4,8 @@ const helmet = require('helmet');
 const express = require('express');
 const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
-const { RouteProvider } = require('./providers/route.provider');
-const { SocketProvider } = require('./providers/socket.provider');
+const RouteProvider = require('./providers/route.provider');
+const SocketProvider = require('./providers/socket.provider');
 const CookieSessionMiddleware = require('./middleware/session.middleware');
 
 const registerRoutes = Symbol('registerRoutes');
@@ -82,6 +82,4 @@ class Server {
     }
 }
 
-module.exports = {
-    Server,
-};
+module.exports = Server;

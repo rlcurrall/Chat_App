@@ -18,7 +18,7 @@ require('./bootstrap');
 | instance which will register all components of the application.
 |
 */
-const { Server } = require('./app/server');
+const Server = require('./app/server');
 
 const server = new Server();
 

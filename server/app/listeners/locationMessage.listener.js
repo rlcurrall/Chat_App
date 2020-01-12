@@ -40,6 +40,4 @@ class LocationMessageListener {
     }
 }
 
-module.exports = {
-    LocationMessageListener,
-};
+module.exports = LocationMessageListener;

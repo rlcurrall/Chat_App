@@ -50,6 +50,4 @@ class RouteProvider {
     }
 }
 
-module.exports = {
-    RouteProvider,
-};
+module.exports = RouteProvider;

@@ -46,6 +46,4 @@ class DisconnectListener {
     }
 }
 
-module.exports = {
-    DisconnectListener,
-};
+module.exports = DisconnectListener;

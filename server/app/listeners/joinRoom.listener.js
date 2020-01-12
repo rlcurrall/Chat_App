@@ -56,6 +56,4 @@ class JoinRoomListener {
     }
 }
 
-module.exports = {
-    JoinRoomListener,
-};
+module.exports = JoinRoomListener;

@@ -40,6 +40,4 @@ class MessageListener {
     }
 }
 
-module.exports = {
-    MessageListener,
-};
+module.exports = MessageListener;
