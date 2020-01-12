@@ -1,5 +1,5 @@
 const User = require('../entities/user.entity');
-const { getSession } = require('../helpers/session.helpers');
+const SessionService = require('../services/session.service');
 const { isRealString } = require('../services/validation.service');
 const { generateMessage } = require('../services/message.service');
 
@@ -23,7 +23,9 @@ class JoinRoomListener {
     }
 
     async handle(_, callback) {
-        const { username, room } = getSession(this.socket);
+        const { username, room } = SessionService.getSessionFromSocket(
+            this.socket,
+        );
 
         if (!isRealString(username) || !isRealString(room)) {
             return callback('Name and room name are required.');

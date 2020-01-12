@@ -1,5 +1,5 @@
 const User = require('../entities/user.entity');
-const { getSession } = require('../helpers/session.helpers');
+const SessionService = require('../services/session.service');
 const { generateLocationMessage } = require('../services/message.service');
 
 /**
@@ -22,7 +22,9 @@ class LocationMessageListener {
     }
 
     async handle(coords) {
-        const { username, room } = getSession(this.socket);
+        const { username, room } = SessionService.getSessionFromSocket(
+            this.socket,
+        );
         const user = await User.find(username, room);
 
         if (user) {
