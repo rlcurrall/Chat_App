@@ -1,29 +1,27 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     entry: {
-        app: [
-            path.resolve(__dirname, 'www', 'js', 'chat.js'),
-            path.resolve(__dirname, 'www', 'js', 'textcolor.js'),
-        ],
-        // styles: [
-        //     path.resolve(__dirname, 'www', 'styles.js'),
-        //     path.resolve(__dirname, 'www', 'css', 'textDropdown.css'),
-        // ],
+        app: [path.resolve(__dirname, 'www', 'app.js')],
     },
     output: {
-        filename: '[name].[contenthash].js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'public'),
     },
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader'],
+                test: /\.css$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                ],
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
@@ -32,11 +30,23 @@ module.exports = {
         ],
     },
     plugins: [
-        new ManifestPlugin(),
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin(),
         new CopyPlugin([
-            { from: 'www/img/*', to: 'img/[name].[hash].[ext]', flatten: true },
-            { from: 'www/css/*', to: 'css/[name].[hash].css', flatten: true },
+            { from: 'www/img/*', to: 'img/[name].[ext]', flatten: true },
         ]),
     ],
+    optimization: {
+        minimizer: [new OptimizeCSSAssetsPlugin({})],
+        splitChunks: {
+            cacheGroups: {
+                default: false,
+                vendors: false,
+                vendor: {
+                    chunks: 'all',
+                    test: /node_modules/,
+                },
+            },
+        },
+    },
 };

@@ -18,9 +18,7 @@ class RouteProvider {
     constructor(app) {
         this.app = app;
 
-        this.app.use(
-            express.static(path.join(process.env.ROOT_DIR, this.publicPath)),
-        );
+        this.app.use(express.static(path.join(process.env.ROOT_DIR, 'public')));
     }
 
     get publicPath() {

@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 // eslint-disable-next-line no-unused-vars
 let userColor;
 

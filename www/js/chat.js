@@ -1,4 +1,8 @@
 /* global userColor */
+const $ = require('jquery');
+const moment = require('moment');
+const mustache = require('mustache');
+const io = require('socket.io-client');
 
 // Create socket for connection with server
 let socket = io();
@@ -75,7 +79,7 @@ socket.on('user-list.update', function(users) {
 socket.on('message.new', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#message-template').html();
-    let html = Mustache.render(template, {
+    let html = mustache.render(template, {
         from: message.from,
         text: message.text,
         color: message.color,
@@ -90,7 +94,7 @@ socket.on('message.new', function(message) {
 socket.on('message.new.location', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#location-message-template').html();
-    let html = Mustache.render(template, {
+    let html = mustache.render(template, {
         from: message.from,
         url: message.url,
         createdAt: formattedTime,
@@ -115,7 +119,7 @@ $('#message-form').on('submit', function(e) {
             room,
             from: 'User',
             text: messageTextBox.val(),
-            color: userColor,
+            // color: userColor,
         },
         function() {
             messageTextBox.val('');
