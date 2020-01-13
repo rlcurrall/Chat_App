@@ -14,6 +14,8 @@
     "npm": "6.x"
   },
   "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build:dev": "webpack --config webpack.config.js",
     "start": "node index.js",
     "start:dev": "nodemon index.js",
     "test": "mocha ./**/*.spec.js",
@@ -26,19 +28,33 @@
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "ioredis": "^4.14.1",
+    "jquery": "^3.4.1",
     "moment": "^2.24.0",
+    "mustache": "^3.2.1",
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "tailwindcss": "^1.1.4"
   },
   "devDependencies": {
+    "autoprefixer": "^9.7.3",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^6.0.3",
+    "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-vue": "^6.1.1",
     "expect": "^24.9.0",
+    "mini-css-extract-plugin": "^0.9.0",
     "mocha": "^6.2.2",
-    "prettier": "^1.19.1"
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.19.1",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-manifest-plugin": "^2.2.0"
   }
 }
