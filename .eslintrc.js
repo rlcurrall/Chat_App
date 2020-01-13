@@ -16,7 +16,6 @@ module.exports = {
         'sourceType': 'module'
     },
     'plugins': [
-        'vue',
         'html',
         'prettier',
     ],

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include("partials/head", { title: "Join | Chat App" }) %>
+    </head>
+    <body
+        class="bg-blue-800 w-screen h-screen flex justify-center items-center"
+    >
+        <div class="bg-gray-200 p-4 rounded w-64 md:w-1/2 max-w-xl shadow-2xl">
+            <form
+                action="/chat"
+                method="POST"
+                class="flex flex-col justify-center"
+            >
+                <h3 class="text-2xl text-center">Join a Chat</h3>
+                <div class="flex flex-col m-2">
+                    <label class="uppercase tracking-tighter"
+                        >Display name</label
+                    >
+                    <input
+                        type="text"
+                        name="username"
+                        autofocus
+                        class="px-4 py-2 rounded border-2"
+                    />
+                </div>
+                <div class="flex flex-col m-2">
+                    <label class="uppercase tracking-tighter">Room name</label>
+                    <input
+                        type="text"
+                        name="room"
+                        class="px-4 py-2 rounded border-2"
+                    />
+                </div>
+                <div class="flex flex-col mx-2 mt-8">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded">
+                        Join
+                    </button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
