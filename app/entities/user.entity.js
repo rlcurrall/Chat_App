@@ -12,6 +12,10 @@ class User {
         );
 
         await redis.set(`user:${this.room}:${this.username}`, '', 'EX', 7200);
+
+        redis.disconnect();
+
+        return this;
     }
 
     async delete() {
@@ -20,6 +24,7 @@ class User {
         );
 
         await redis.del(`user:${this.room}:${this.username}`);
+        redis.disconnect();
 
         return this;
     }
@@ -31,7 +36,10 @@ class User {
         room = room.toLowerCase();
         username = username.toLowerCase();
 
-        return await redis.del(`user:${room}:${username}`);
+        const res = await redis.del(`user:${room}:${username}`);
+        redis.disconnect();
+
+        return res;
     }
 
     static async find(username, room) {
@@ -42,6 +50,7 @@ class User {
         username = username.toLowerCase();
 
         const exists = await redis.exists(`user:${room}:${username}`);
+        redis.disconnect();
 
         if (exists) {
             return new this(username, room);
@@ -58,6 +67,7 @@ class User {
         username = username.toLowerCase();
 
         const exists = await redis.exists(`user:${room}:${username}`);
+        redis.disconnect();
 
         return !!exists;
     }
@@ -70,6 +80,7 @@ class User {
         let users = [];
 
         const results = await redis.scan(0, 'match', pattern);
+        redis.disconnect();
 
         for (const u of results[1]) {
             let data = u.split(':');
