@@ -1,4 +1,3 @@
-/* global userColor */
 const $ = require('jquery');
 const moment = require('moment');
 const mustache = require('mustache');
