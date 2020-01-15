@@ -47,9 +47,7 @@ socket.on('connect', function() {
     socket.emit('room.join', { name, room }, function(err) {
         if (err) {
             alert(err);
-            window.location.href = '/';
-        } else {
-            console.log('No error');
+            window.location.href = '/logout';
         }
     });
 });
@@ -60,7 +58,6 @@ socket.on('disconnect', function() {
 });
 
 socket.on('user-list.update', function(users) {
-    console.log('users:', users);
     let ol = $('<ol></ol');
 
     users.forEach(function(user) {
@@ -68,10 +65,6 @@ socket.on('user-list.update', function(users) {
     });
 
     $('#users').html(ol);
-});
-
-socket.on('user-list.update', function(users) {
-    console.log('Users list', users);
 });
 
 // Display message received from server
