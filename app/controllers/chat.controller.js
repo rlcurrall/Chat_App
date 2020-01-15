@@ -9,22 +9,25 @@ const User = require('../entities/user.entity');
  * @param {Function} next
  */
 async function index(req, res, next) {
-    if (req.session.username && req.session.room) {
-        const exists = await User.exists(
-            req.session.username,
-            req.session.room,
-        );
+    const { username, room } = req.session;
+    if (username && room) {
+        const exists = await User.exists(username, room);
 
         if (exists) {
-            // handle where exists (i.e. show an error page)
+            res.render('errors/user-taken', {
+                username,
+                room,
+            });
+            return;
         }
 
         res.render('chat', {
-            username: req.session.username,
-            room: req.session.room,
+            username,
+            room,
         });
         return;
     }
+
     res.redirect('/');
     next();
 }
