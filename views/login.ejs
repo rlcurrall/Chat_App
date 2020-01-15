@@ -7,13 +7,15 @@
         class="bg-blue-800 w-screen h-screen flex flex-col justify-center items-center"
     >
         <% if (locals.errors) { %>
-            <div class="w-64 md:w-1/2 max-w-xl">
-                <% for (let e of errors) { %>
-                    <div class="my-2 p-4 w-full border rounded text-white bg-red-500 shadow-2xl">
-                        <%= e  %>
-                    </div>
-                <% } %>
+        <div class="w-64 md:w-1/2 max-w-xl">
+            <% for (let e of errors) { %>
+            <div
+                class="my-2 p-4 w-full border rounded text-white bg-red-500 shadow-2xl"
+            >
+                <%= e %>
             </div>
+            <% } %>
+        </div>
         <% } %>
 
         <div class="bg-gray-200 p-4 rounded w-64 md:w-1/2 max-w-xl shadow-2xl">
@@ -49,5 +51,7 @@
                 </div>
             </form>
         </div>
+
+        <script src="vendor.js"></script>
     </body>
 </html>
