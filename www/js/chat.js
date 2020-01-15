@@ -1,48 +1,14 @@
-const $ = require('jquery');
 const moment = require('moment');
-const mustache = require('mustache');
 const io = require('socket.io-client');
+const utils = require('./utils');
 
 // Create socket for connection with server
 let socket = io();
 
-function getMeta(metaName) {
-    const metas = document.getElementsByTagName('meta');
-
-    for (let i = 0; i < metas.length; i++) {
-        if (metas[i].getAttribute('name') === metaName) {
-            return metas[i].getAttribute('content');
-        }
-    }
-
-    return null;
-}
-
-// Auto-scroll page
-function scrollToBottom() {
-    // Selectors
-    let messages = $('#messages');
-    let newMessage = messages.children('li:last-child');
-
-    // Heights
-    let clientHeight = messages.prop('clientHeight');
-    let scrollTop = messages.prop('scrollTop');
-    let scrollHeight = messages.prop('scrollHeight');
-    let newMessageHeight = newMessage.innerHeight();
-    let lastMessageHeight = newMessage.prev().innerHeight();
-
-    if (
-        clientHeight + scrollTop + newMessageHeight + lastMessageHeight >=
-        scrollHeight
-    ) {
-        messages.scrollTop(scrollHeight);
-    }
-}
-
 // Indicate when user connects
 socket.on('connect', function() {
-    const username = getMeta('username');
-    const room = getMeta('room');
+    const username = utils.getMeta('username');
+    const room = utils.getMeta('room');
 
     socket.emit('chat.join.room', { username, room }, function(err) {
         if (err) {
@@ -52,89 +18,69 @@ socket.on('connect', function() {
     });
 });
 
-// Indicate when user disconnects
-socket.on('disconnect', function() {
-    console.log('Disconnected from server.');
-});
-
 socket.on('chat.update.users', function(users) {
-    let ol = $('<ol></ol>');
+    let ol = document.createElement('ol');
 
     users.forEach(function(user) {
-        ol.append($('<li></li>').text(user));
+        let li = document.createElement('li');
+        li.innerText = user;
+        ol.append(li);
     });
 
-    $('#users').html(ol);
+    let userList = document.querySelector('#users');
+    userList.innerHTML = '';
+    userList.append(ol);
 });
 
 // Display message received from server
 socket.on('chat.new.message', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
-    let template = $('#message-template').html();
-    let html = mustache.render(template, {
+    let html = utils.makeHTML('message-template', {
         from: message.from,
         text: message.text,
         color: message.color,
         createdAt: formattedTime,
     });
 
-    $('#messages').append(html);
-    scrollToBottom();
+    document.querySelector('#messages').append(html);
+    utils.scrollToBottom();
 });
 
 // Display location link received from server
 socket.on('chat.new.message.location', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
-    let template = $('#location-message-template').html();
-    let html = mustache.render(template, {
+    let html = utils.makeHTML('location-message-template', {
         from: message.from,
         url: message.url,
         createdAt: formattedTime,
     });
 
-    $('#messages').append(html);
-    scrollToBottom();
+    document.querySelector('#messages').append(html);
+    utils.scrollToBottom();
 });
 
-let messageTextBox = $('[name=message]');
+window.sendMessage = msg => {
+    const username = utils.getMeta('username');
+    const room = utils.getMeta('room');
 
-// When form is submitted, don't reload page, send emit message
-$('#message-form').on('submit', function(e) {
-    const username = getMeta('username');
-    const room = getMeta('room');
+    socket.emit('chat.post.message', {
+        username,
+        room,
+        from: 'User',
+        text: msg,
+    });
+};
 
-    e.preventDefault();
-    socket.emit(
-        'chat.post.message',
-        {
-            username,
-            room,
-            from: 'User',
-            text: messageTextBox.val(),
-            // color: userColor,
-        },
-        function() {
-            messageTextBox.val('');
-        },
-    );
-});
-
-// Define send-location button
-let locationButton = $('#send-location');
-
-// When button clicked get latitude and longitude
-locationButton.on('click', function() {
+window.sendLocationMessage = () => {
+    console.log('hello');
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by your browser.');
     }
 
-    locationButton.attr('disabled', 'disabled').text('Sending Location...');
-
     navigator.geolocation.getCurrentPosition(
         function(position) {
-            const username = getMeta('username');
-            const room = getMeta('room');
-            locationButton.removeAttr('disabled').text('Send Location');
+            const username = utils.getMeta('username');
+            const room = utils.getMeta('room');
 
             socket.emit('chat.post.message.location', {
                 username,
@@ -144,9 +90,7 @@ locationButton.on('click', function() {
             });
         },
         function() {
-            locationButton.removeAttr('disabled').text('Send Location');
-
             alert('Unable to fetch location at this time.');
         },
     );
-});
+};

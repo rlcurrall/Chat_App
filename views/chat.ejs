@@ -14,18 +14,22 @@
         <div class="chat__main">
             <ol id="messages" class="chat__messages"></ol>
 
-            <div class="chat__footer">
-                <form id="message-form">
+            <div class="chat__footer" x-data="{ message: '' }">
+                <form
+                  id="message-form"
+                  x-on:submit.prevent
+                >
                     <input
                         autofocus
                         autocomplete="off"
                         name="message"
                         type="text"
                         placeholder="Message"
+                        x-model="message"
                     />
-                    <button>Send</button>
+                    <button x-on:click="sendMessage(message); message = '';">Send</button>
                 </form>
-                <button id="send-location">Send Location</button>
+                <button id="send-location" x-on:click="sendLocationMessage()">Send Location</button>
             </div>
         </div>
 
