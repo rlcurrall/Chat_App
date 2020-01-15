@@ -6,14 +6,12 @@ const { generateMessage } = require('../services/message.service');
  * @class JoinRoomListener
  * @property {SocketIO.Server} io
  * @property {SocketIO.Socket} socket
- * @property {Users} userRepo
  */
 class JoinRoomListener {
     /**
      * Creates an instance of JoinRoomListener.
      * @param {SocketIO.Server} io
      * @param {SocketIO.Socket} socket
-     * @param {Users} userRepo
      * @memberof JoinRoomListener
      */
     constructor(io, socket) {
