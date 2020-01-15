@@ -38,11 +38,11 @@ class DisconnectListener {
 
         let users = await User.getByRoom(room);
 
-        this.io.to(user.room).emit('user-list.update', users);
+        this.io.to(user.room).emit('chat.update.users', users);
         this.io
             .to(user.room)
             .emit(
-                'message.new',
+                'chat.new.message',
                 generateMessage('Admin', `${user.username} has left`),
             );
     }

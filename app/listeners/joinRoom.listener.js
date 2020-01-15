@@ -26,22 +26,27 @@ class JoinRoomListener {
             return callback('Name and room name are required.');
         }
 
-        let user = await User.find(username, room); // TODO check if user null...
-        let users = await User.getByRoom(user.room);
+        let user = await User.find(username, room);
+        if (!user) {
+            user = new User(username, room);
+            user.save();
+        }
 
-        this.socket.join(user.room);
+        let users = await User.getByRoom(room);
 
-        this.io.to(user.room).emit('user-list.update', users);
+        this.socket.join(room);
+
+        this.io.to(room).emit('chat.update.users', users);
 
         this.socket.emit(
-            'message.new',
+            'chat.new.message',
             generateMessage('Admin', 'Welcome to the chat app!'),
         );
         this.socket.broadcast
-            .to(user.room)
+            .to(room)
             .emit(
-                'message.new',
-                generateMessage('Admin', `${user.username} has joined`),
+                'chat.new.message',
+                generateMessage('Admin', `${username} has joined`),
             );
         callback();
     }
