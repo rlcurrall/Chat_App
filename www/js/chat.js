@@ -41,13 +41,13 @@ function scrollToBottom() {
 
 // Indicate when user connects
 socket.on('connect', function() {
-    const name = getMeta('username');
+    const username = getMeta('username');
     const room = getMeta('room');
 
-    socket.emit('room.join', { name, room }, function(err) {
+    socket.emit('room.join', { username, room }, function(err) {
         if (err) {
             alert(err);
-            window.location.href = '/logout';
+            window.location.href = '/';
         }
     });
 });

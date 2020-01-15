@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "rimraf public && cross-env NODE_ENV=production rollup --config rollup.config.js",
-    "build:dev": "rollup --config rollup.config.js",
+    "build:dev": "rollup -w --config rollup.config.js",
     "start": "node index.js",
     "start:dev": "nodemon index.js",
     "test": "mocha ./**/*.spec.js",

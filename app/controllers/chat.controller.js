@@ -10,6 +10,7 @@ const User = require('../entities/user.entity');
  */
 async function index(req, res, next) {
     const { username, room } = req.session;
+
     if (username && room) {
         const exists = await User.exists(username, room);
 
@@ -20,6 +21,9 @@ async function index(req, res, next) {
             });
             return;
         }
+
+        const user = new User(username, room);
+        await user.save();
 
         res.render('chat', {
             username,
