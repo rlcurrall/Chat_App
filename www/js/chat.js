@@ -41,15 +41,13 @@ function scrollToBottom() {
 
 // Indicate when user connects
 socket.on('connect', function() {
-    const name = getMeta('username');
+    const username = getMeta('username');
     const room = getMeta('room');
 
-    socket.emit('room.join', { name, room }, function(err) {
+    socket.emit('chat.join.room', { username, room }, function(err) {
         if (err) {
             alert(err);
-            window.location.href = '/';
-        } else {
-            console.log('No error');
+            location.assign('/');
         }
     });
 });
@@ -59,9 +57,8 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server.');
 });
 
-socket.on('user-list.update', function(users) {
-    console.log('users:', users);
-    let ol = $('<ol></ol');
+socket.on('chat.update.users', function(users) {
+    let ol = $('<ol></ol>');
 
     users.forEach(function(user) {
         ol.append($('<li></li>').text(user));
@@ -70,12 +67,8 @@ socket.on('user-list.update', function(users) {
     $('#users').html(ol);
 });
 
-socket.on('user-list.update', function(users) {
-    console.log('Users list', users);
-});
-
 // Display message received from server
-socket.on('message.new', function(message) {
+socket.on('chat.new.message', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#message-template').html();
     let html = mustache.render(template, {
@@ -90,7 +83,7 @@ socket.on('message.new', function(message) {
 });
 
 // Display location link received from server
-socket.on('message.new.location', function(message) {
+socket.on('chat.new.message.location', function(message) {
     let formattedTime = moment(message.createdAt).format('h:mm a');
     let template = $('#location-message-template').html();
     let html = mustache.render(template, {
@@ -112,7 +105,7 @@ $('#message-form').on('submit', function(e) {
 
     e.preventDefault();
     socket.emit(
-        'message.post',
+        'chat.post.message',
         {
             username,
             room,
@@ -143,7 +136,7 @@ locationButton.on('click', function() {
             const room = getMeta('room');
             locationButton.removeAttr('disabled').text('Send Location');
 
-            socket.emit('message.post.location', {
+            socket.emit('chat.post.message.location', {
                 username,
                 room,
                 latitude: position.coords.latitude,

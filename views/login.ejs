@@ -4,8 +4,20 @@
         <%- include("partials/head", { title: "Join | Chat App" }) %>
     </head>
     <body
-        class="bg-blue-800 w-screen h-screen flex justify-center items-center"
+        class="bg-blue-800 w-screen h-screen flex flex-col justify-center items-center"
     >
+        <% if (locals.errors) { %>
+        <div class="w-64 md:w-1/2 max-w-xl">
+            <% for (let e of errors) { %>
+            <div
+                class="my-2 p-4 w-full border rounded text-white bg-red-500 shadow-2xl"
+            >
+                <%= e %>
+            </div>
+            <% } %>
+        </div>
+        <% } %>
+
         <div class="bg-gray-200 p-4 rounded w-64 md:w-1/2 max-w-xl shadow-2xl">
             <form
                 action="/chat"
@@ -14,9 +26,9 @@
             >
                 <h3 class="text-2xl text-center">Join a Chat</h3>
                 <div class="flex flex-col m-2">
-                    <label class="uppercase tracking-tighter"
-                        >Display name</label
-                    >
+                    <label class="uppercase tracking-tighter">
+                        Display name
+                    </label>
                     <input
                         type="text"
                         name="username"
@@ -39,5 +51,7 @@
                 </div>
             </form>
         </div>
+
+        <script src="vendor.js"></script>
     </body>
 </html>

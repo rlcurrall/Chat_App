@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include("../partials/head", { title: "Error | Chat App" }) %>
+    </head>
+    <body
+        class="bg-blue-800 w-screen h-screen flex flex-col justify-center items-center"
+    >
+        <div
+            class="bg-gray-200 flex flex-col rounded w-64 md:w-1/2 max-w-xl shadow-2xl"
+        >
+            <h3 class="py-4 border-b rounded-t bg-gray-300">
+                Oops! Error Joining Chat Room!
+            </h3>
+            <p class="m-4 text-center">
+                You are currently logged in as
+                <b class="font-bold uppercase"><%= username %></b> in the
+                <b class="font-bold uppercase"><%= room %></b> chat room, but
+                that user is already logged in in a different browser or window.
+            </p>
+            <div class="mt-8 mb-2 flex justify-center">
+                <a
+                    href="/chat"
+                    class="m-2 px-4 py-2 bg-blue-600 hover:bg-blue-800 text-white border rounded"
+                >
+                    Rejoin
+                </a>
+                <a
+                    href="/logout"
+                    class="m-2 px-4 py-2 bg-blue-600 hover:bg-blue-800 text-white border rounded"
+                >
+                    Logout
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

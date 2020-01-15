@@ -24,9 +24,9 @@ class SocketProvider {
     get listeners() {
         return {
             disconnect: DisconnectListener,
-            'room.join': JoinRoomListener,
-            'message.post': MessageListener,
-            'message.post.location': LocationMessageListener,
+            'chat.join.room': JoinRoomListener,
+            'chat.post.message': MessageListener,
+            'chat.post.message.location': LocationMessageListener,
         };
     }
 

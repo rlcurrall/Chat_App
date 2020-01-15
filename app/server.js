@@ -8,10 +8,6 @@ const RouteProvider = require('./providers/route.provider');
 const SocketProvider = require('./providers/socket.provider');
 const CookieSessionMiddleware = require('./middleware/session.middleware');
 
-const registerRoutes = Symbol('registerRoutes');
-const registerSocket = Symbol('registerSocket');
-const registerGlobalMiddleware = Symbol('registerGlobalMiddleware');
-
 /**
  * An instance of a server.
  *
@@ -28,15 +24,10 @@ class Server {
     constructor() {
         let app = express();
         let server = http.createServer(app);
-        let io = socketIO(server);
-
-        app.io = io;
+        let io = (app.io = socketIO(server));
 
         app.set('trust proxy', 1);
         app.disable('x-powered-by');
-
-        app.set('views', path.join(process.env.ROOT_DIR, 'views'));
-        app.set('view engine', 'ejs');
 
         this.app = app;
         this.server = server;
@@ -50,16 +41,17 @@ class Server {
      * @memberof Server
      */
     boot() {
-        this[registerGlobalMiddleware]();
-        this[registerRoutes]();
-        this[registerSocket]();
+        this.registerTemplateEngine();
+        this.registerGlobalMiddleware();
+        this.registerRoutes();
+        this.registerSocketListeners();
 
         this.server.listen(process.env.PORT || 3000, () => {
             console.log(`Server is up on port ${process.env.PORT || 3000}`);
         });
     }
 
-    [registerGlobalMiddleware]() {
+    registerGlobalMiddleware() {
         this.app.use(helmet());
 
         this.app.use(CookieSessionMiddleware);
@@ -69,16 +61,21 @@ class Server {
         this.app.use(bodyParser.urlencoded({ extended: true }));
     }
 
-    [registerRoutes]() {
+    registerRoutes() {
         const routeProvider = new RouteProvider(this.app);
 
         routeProvider.register();
     }
 
-    [registerSocket]() {
+    registerSocketListeners() {
         const socketProvider = new SocketProvider(this.io);
 
         socketProvider.register();
+    }
+
+    registerTemplateEngine() {
+        this.app.set('views', path.join(process.env.ROOT_DIR, 'views'));
+        this.app.set('view engine', 'ejs');
     }
 }
 

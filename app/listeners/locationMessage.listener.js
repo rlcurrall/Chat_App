@@ -31,7 +31,7 @@ class LocationMessageListener {
             this.io
                 .to(user.room)
                 .emit(
-                    'message.new.location',
+                    'chat.new.message.location',
                     generateLocationMessage(
                         user.username,
                         coords.latitude,

@@ -1,3 +1,5 @@
+const User = require('../entities/user.entity');
+
 /**
  * Attempt to ender a chat room the user was previously in, if the user was not
  * previously part of a room then redirect to the login form.
@@ -6,34 +8,34 @@
  * @param {express.response} res
  * @param {Function} next
  */
-function index(req, res, next) {
-    if (req.session.username && req.session.room) {
+async function index(req, res, next) {
+    const { username, room } = req.session;
+
+    if (username && room) {
+        const exists = await User.exists(username, room);
+
+        if (exists) {
+            res.render('errors/user-taken', {
+                username,
+                room,
+            });
+            return;
+        }
+
+        const user = new User(username, room);
+        await user.save();
+
         res.render('chat', {
-            username: req.session.username,
-            room: req.session.room,
+            username,
+            room,
         });
         return;
     }
+
     res.redirect('/');
-    next();
-}
-
-/**
- * Join a chat room as a new user.
- *
- * @param {express.request} req
- * @param {express.response} res
- * @param {Function} next
- */
-function newChat(req, res, next) {
-    req.session.username = req.body.username;
-    req.session.room = req.body.room;
-
-    res.render('chat', req.body);
     next();
 }
 
 module.exports = {
     index,
-    newChat,
 };

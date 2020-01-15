@@ -33,7 +33,7 @@ class MessageListener {
             this.io
                 .to(user.room)
                 .emit(
-                    'message.new',
+                    'chat.new.message',
                     generateMessage(user.username, text, color),
                 );
         }
