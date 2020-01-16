@@ -1,4 +1,9 @@
+// Include Styles
 require('./css/styles.css');
-require('./css/textDropdown.css');
 
-require('./js/chat');
+// Include JS modules to export
+const chat = require('./js/chat');
+
+module.exports = {
+    ...chat,
+};

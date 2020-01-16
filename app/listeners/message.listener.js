@@ -22,7 +22,7 @@ class MessageListener {
         this.socket = socket;
     }
 
-    async handle({ text, color }, callback) {
+    async handle({ text, color }) {
         const { username, room } = SessionService.getSessionFromSocket(
             this.socket,
         );
@@ -37,8 +37,6 @@ class MessageListener {
                     generateMessage(user.username, text, color),
                 );
         }
-
-        callback();
     }
 }
 

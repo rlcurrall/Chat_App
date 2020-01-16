@@ -46,6 +46,7 @@ class JoinRoomListener {
                 'chat.new.message',
                 generateMessage('Admin', `${username} has joined`),
             );
+
         callback();
     }
 }

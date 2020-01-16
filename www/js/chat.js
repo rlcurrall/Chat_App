@@ -59,7 +59,7 @@ socket.on('chat.new.message.location', function(message) {
     utils.scrollToBottom();
 });
 
-window.sendMessage = msg => {
+function sendMessage(msg) {
     const username = utils.getMeta('username');
     const room = utils.getMeta('room');
 
@@ -69,9 +69,9 @@ window.sendMessage = msg => {
         from: 'User',
         text: msg,
     });
-};
+}
 
-window.sendLocationMessage = () => {
+function sendLocationMessage() {
     console.log('hello');
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by your browser.');
@@ -93,4 +93,9 @@ window.sendLocationMessage = () => {
             alert('Unable to fetch location at this time.');
         },
     );
+}
+
+module.exports = {
+    sendMessage,
+    sendLocationMessage,
 };

@@ -27,9 +27,9 @@
                         placeholder="Message"
                         x-model="message"
                     />
-                    <button x-on:click="sendMessage(message); message = '';">Send</button>
+                    <button x-on:click="chat.sendMessage(message); message = '';">Send</button>
                 </form>
-                <button id="send-location" x-on:click="sendLocationMessage()">Send Location</button>
+                <button id="send-location" x-on:click="chat.sendLocationMessage()">Send Location</button>
             </div>
         </div>
 
