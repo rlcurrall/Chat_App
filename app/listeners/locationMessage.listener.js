@@ -6,14 +6,12 @@ const { generateLocationMessage } = require('../services/message.service');
  * @class LocationMessageListener
  * @property {SocketIO.Server} io
  * @property {SocketIO.Socket} socket
- * @property {Users} userRepo
  */
 class LocationMessageListener {
     /**
      * Creates an instance of LocationMessageListener.
      * @param {SocketIO.Server} io
      * @param {SocketIO.Socket} socket
-     * @param {Users} userRepo
      * @memberof LocationMessageListener
      */
     constructor(io, socket) {

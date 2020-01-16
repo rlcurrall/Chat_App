@@ -1,4 +1,3 @@
-const Users = require('../entities/users');
 const MessageListener = require('../listeners/message.listener');
 const JoinRoomListener = require('../listeners/joinRoom.listener');
 const DisconnectListener = require('../listeners/disconnect.listener');
@@ -18,7 +17,6 @@ class SocketProvider {
      */
     constructor(io) {
         this.io = io;
-        this.userRepo = new Users();
     }
 
     get listeners() {
@@ -35,11 +33,7 @@ class SocketProvider {
             for (const key in this.listeners) {
                 if (key in this.listeners) {
                     const listener = this.listeners[key];
-                    const listenerInstance = new listener(
-                        this.io,
-                        socket,
-                        this.userRepo,
-                    );
+                    const listenerInstance = new listener(this.io, socket);
 
                     socket.on(
                         key,

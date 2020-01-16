@@ -7,14 +7,12 @@ const { generateMessage } = require('../services/message.service');
  * @class MessageListener
  * @property {SocketIO.Server} io
  * @property {SocketIO.Socket} socket
- * @property {Users} userRepo
  */
 class MessageListener {
     /**
      * Creates an instance of MessageListener.
      * @param {SocketIO.Server} io
      * @param {SocketIO.Socket} socket
-     * @param {Users} userRepo
      * @memberof MessageListener
      */
     constructor(io, socket) {
