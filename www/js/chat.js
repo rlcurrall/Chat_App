@@ -42,7 +42,11 @@ socket.on('chat.new.message', function(message) {
         createdAt: formattedTime,
     });
 
-    document.querySelector('#messages').append(html);
+    // Only append if there is HTML
+    if (html) {
+        document.querySelector('#messages').append(html);
+    }
+
     utils.scrollToBottom();
 });
 
@@ -55,7 +59,11 @@ socket.on('chat.new.message.location', function(message) {
         createdAt: formattedTime,
     });
 
-    document.querySelector('#messages').append(html);
+    // Only append if there is HTML
+    if (html) {
+        document.querySelector('#messages').append(html);
+    }
+
     utils.scrollToBottom();
 });
 
@@ -72,7 +80,6 @@ function sendMessage(msg) {
 }
 
 function sendLocationMessage() {
-    console.log('hello');
     if (!navigator.geolocation) {
         return alert('Geolocation not supported by your browser.');
     }

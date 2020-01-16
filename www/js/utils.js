@@ -34,6 +34,12 @@ function scrollToBottom() {
 
 function makeHTML(templateId, data) {
     let template = document.querySelector(`#${templateId}`).innerHTML;
+
+    // Bail if no template found by that ID
+    if (!template) {
+        return null;
+    }
+
     let html = mustache.render(template, data);
 
     return document.createRange().createContextualFragment(html);
